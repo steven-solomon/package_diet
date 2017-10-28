@@ -1,4 +1,4 @@
-require_relative 'file_reader'
+require "package_diet/file_reader"
 
 class Analyzer
   def initialize(ui)
@@ -6,6 +6,10 @@ class Analyzer
   end
 
   def run(directory)
+    if directory.nil?
+      raise 'Directory must be provided'
+    end
+
     file_reader = FileReader.new(directory)
     ruby_files = file_reader.find_ruby_files
 

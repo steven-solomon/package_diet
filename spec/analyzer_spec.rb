@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe Analyzer do
+  it 'raises an error when directory is nil' do
+    ui = double(:ui)
+    package_diet = Analyzer.new(ui)
+
+    expect{ package_diet.run(nil) }.to raise_error(/Directory must be provided/)
+  end
+
   it 'raises an error when there is no ruby files' do
     directory = 'spec/fixtures/empty_directory'
     ui = double(:ui)
