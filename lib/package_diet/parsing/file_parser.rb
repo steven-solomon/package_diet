@@ -14,14 +14,14 @@ module Parsing
       root = Parser::CurrentRuby.parse(file_contents)
 
       if root&.type == :class
-        one = root.children.first
-        two = one.children.first
-        three = two&.children&.last
-        three && three.to_s
+        class_constant = root.children.first
+        module_constant = class_constant.children.first
+        module_symbol = module_constant&.children&.last
+        module_symbol&.to_s
       elsif root&.type == :module
-        one = root.children.first
-        two = one.children.last
-        two.to_s
+        module_constant = root.children.first
+        module_symbol = module_constant.children.last
+        module_symbol.to_s
       end
     end
   end
