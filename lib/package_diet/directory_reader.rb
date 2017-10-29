@@ -1,4 +1,6 @@
-class FileReader
+require 'set'
+
+class DirectoryReader
   def initialize(directory)
     @path = File.expand_path(directory)
   end
@@ -8,11 +10,16 @@ class FileReader
   end
 
   def parse_files(ruby_files)
-    ruby_files.map do |file_name|
+    files_set = ruby_files
+    packages = files_set.map do |file_name|
       file_contents = read_file(file_name)
       package_name = FileParser.parse(file_contents)
       yield package_name
     end
+
+    packages
+      .to_set
+      .to_a
   end
 
   def read_file(file_path)

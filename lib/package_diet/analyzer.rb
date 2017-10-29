@@ -1,4 +1,4 @@
-require "package_diet/file_reader"
+require 'package_diet/directory_reader'
 
 class Analyzer
   def initialize(ui)
@@ -10,14 +10,14 @@ class Analyzer
       raise 'Directory must be provided'
     end
 
-    file_reader = FileReader.new(directory)
-    ruby_files = file_reader.find_ruby_files
+    directory_reader = DirectoryReader.new(directory)
+    ruby_files = directory_reader.find_ruby_files
 
-    if ruby_files.size.zero?
+    if ruby_files.empty?
       raise 'Directory has no ruby files'
     end
 
-    nodes = file_reader.parse_files(ruby_files) do |package_name|
+    nodes = directory_reader.parse_files(ruby_files) do |package_name|
       Node.new(package_name)
     end
 
@@ -31,9 +31,20 @@ class Analyzer
   class Node
     attr_reader :name, :dependencies
 
+
     def initialize(name)
       @name = name
       @dependencies = []
+    end
+
+    def ==(other)
+      name == other.name
+    end
+
+    alias :eql? :==
+
+    def hash
+      name.hash
     end
   end
 end

@@ -1,0 +1,2 @@
+class ExampleModule::B
+end

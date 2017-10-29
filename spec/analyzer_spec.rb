@@ -28,6 +28,19 @@ describe Analyzer do
     end
   end
 
+  it 'asks UI to render root package once' do
+    directory = 'spec/fixtures/two_classes_with_no_module'
+    ui = double(:ui, render: nil)
+    package_diet = Analyzer.new(ui)
+
+    package_diet.run(directory)
+
+    expect(ui).to have_received(:render) do |graph|
+      expect(graph.size).to eq(1)
+      matches_node(graph.first, 'Root')
+    end
+  end
+
   it 'asks UI to render a package' do
     directory = 'spec/fixtures/class_with_module'
     ui = double(:ui, render: nil)
@@ -36,6 +49,19 @@ describe Analyzer do
     package_diet.run(directory)
 
     expect(ui).to have_received(:render) do |graph|
+      matches_node(graph.first, 'ExampleModule')
+    end
+  end
+
+  it 'asks UI to render a package once' do
+    directory = 'spec/fixtures/two_classes_with_the_same_module'
+    ui = double(:ui, render: nil)
+    package_diet = Analyzer.new(ui)
+
+    package_diet.run(directory)
+
+    expect(ui).to have_received(:render) do |graph|
+      expect(graph.size).to eq(1)
       matches_node(graph.first, 'ExampleModule')
     end
   end
