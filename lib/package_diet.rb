@@ -1,12 +1,12 @@
-require "package_diet/version"
-require "package_diet/directory_reader"
-require "package_diet/analyzer"
-require "package_diet/file_parser"
+require 'package_diet/version'
+require 'package_diet/parsing/directory_reader'
+require 'package_diet/parsing/analyzer'
+require 'package_diet/parsing/file_parser'
 
 module PackageDiet
   class Runner
     def self.run(path)
-      analyzer = Analyzer.new(CommandLineUI.new)
+      analyzer = Parsing::Analyzer.new(CommandLineUI.new)
       analyzer.run(path)
     end
   end
