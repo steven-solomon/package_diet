@@ -1,1 +1,6 @@
+Features
+- Parse directory and list out top level packages
+
+TODO
 - Recursive parsing of directories
+- Render GraphViz diagram of packages
