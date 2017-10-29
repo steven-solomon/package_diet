@@ -7,7 +7,7 @@ module Parsing
     end
 
     def self.find_module_name(file_contents)
-      find_modules(file_contents) || 'Root'
+      Component.new(find_modules(file_contents) || 'Root')
     end
 
     def self.find_modules(file_contents)
@@ -23,6 +23,15 @@ module Parsing
         module_symbol = module_constant.children.last
         module_symbol.to_s
       end
+    end
+  end
+
+  class Component
+    attr_reader :name, :dependencies
+
+    def initialize(name)
+      @name = name
+      @dependencies = []
     end
   end
 end

@@ -18,7 +18,7 @@ module Parsing
       end
 
       nodes = directory_reader.parse_files(ruby_files) do |package_name|
-        Node.new(package_name)
+        Node.new(package_name.name)
       end
 
       ui.render(nodes)

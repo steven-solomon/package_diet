@@ -5,9 +5,9 @@ module Parsing
     it 'returns root when file is empty' do
       empty_file_contents = ''
 
-      result = FileParser.parse(empty_file_contents)
+      component = FileParser.parse(empty_file_contents)
 
-      expect(result).to eq('Root')
+      expect(component.name).to eq('Root')
     end
 
     it 'returns root when there is only a class' do
@@ -16,9 +16,9 @@ module Parsing
       end
       FILE
 
-      result = FileParser.parse(file_contents)
+      component = FileParser.parse(file_contents)
 
-      expect(result).to eq('Root')
+      expect(component.name).to eq('Root')
     end
 
     it 'returns root when there class references another module' do
@@ -30,9 +30,9 @@ module Parsing
       end
       FILE
 
-      result = FileParser.parse(file_contents)
+      component = FileParser.parse(file_contents)
 
-      expect(result).to eq('Root')
+      expect(component.name).to eq('Root')
     end
 
     it 'returns module name when there is a module' do
@@ -41,9 +41,9 @@ module Parsing
       end
       FILE
 
-      result = FileParser.parse(file_contents)
+      component = FileParser.parse(file_contents)
 
-      expect(result).to eq('ExampleModule')
+      expect(component.name).to eq('ExampleModule')
     end
 
     it 'returns module name when it is part of class' do
@@ -52,9 +52,9 @@ module Parsing
       end
       FILE
 
-      result = FileParser.parse(file_contents)
+      component = FileParser.parse(file_contents)
 
-      expect(result).to eq('AnotherModule')
+      expect(component.name).to eq('AnotherModule')
     end
   end
 end
