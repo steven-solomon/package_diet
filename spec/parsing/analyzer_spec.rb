@@ -10,7 +10,7 @@ module Parsing
     end
 
     it 'raises an error when there is no ruby files' do
-      directory = 'spec/fixtures/empty_directory'
+      directory = path_to('empty_directory')
       ui = double(:ui)
       package_diet = Analyzer.new(ui)
 
@@ -18,9 +18,11 @@ module Parsing
     end
 
     it 'asks UI to render a root package' do
-      directory = 'spec/fixtures/class_with_no_module'
+      directory = path_to('class_with_no_module')
       ui = double(:ui, render: nil)
       package_diet = Analyzer.new(ui)
+
+      allow(ui).to receive(:render)
 
       package_diet.run(directory)
 
@@ -30,9 +32,11 @@ module Parsing
     end
 
     it 'asks UI to render root package once' do
-      directory = 'spec/fixtures/two_classes_with_no_module'
+      directory = path_to('two_classes_with_no_module')
       ui = double(:ui, render: nil)
       package_diet = Analyzer.new(ui)
+
+      allow(ui).to receive(:render)
 
       package_diet.run(directory)
 
@@ -43,9 +47,11 @@ module Parsing
     end
 
     it 'asks UI to render a package' do
-      directory = 'spec/fixtures/class_with_module'
+      directory = path_to('class_with_module')
       ui = double(:ui, render: nil)
       package_diet = Analyzer.new(ui)
+
+      allow(ui).to receive(:render)
 
       package_diet.run(directory)
 
@@ -55,9 +61,11 @@ module Parsing
     end
 
     it 'asks UI to render a package once' do
-      directory = 'spec/fixtures/two_classes_with_the_same_module'
+      directory = path_to('two_classes_with_the_same_module')
       ui = double(:ui, render: nil)
       package_diet = Analyzer.new(ui)
+
+      allow(ui).to receive(:render)
 
       package_diet.run(directory)
 
@@ -68,9 +76,11 @@ module Parsing
     end
 
     it 'asks UI to render multiple packages' do
-      directory = 'spec/fixtures/multiple_modules'
+      directory = path_to('multiple_modules')
       ui = double(:ui, render: nil)
       package_diet = Analyzer.new(ui)
+
+      allow(ui).to receive(:render)
 
       package_diet.run(directory)
 
@@ -83,6 +93,10 @@ module Parsing
     def matches_node(graph, name)
       expect(graph.name).to eq(name)
       expect(graph.dependencies).to be_empty
+    end
+
+    def path_to(directory)
+      "spec/parsing/fixtures/#{directory}"
     end
   end
 end
