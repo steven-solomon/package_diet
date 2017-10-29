@@ -90,6 +90,21 @@ module Parsing
       end
     end
 
+    it 'asks UI to render recursive packages' do
+      directory = path_to('recursive_modules')
+      ui = double(:ui, render: nil)
+      package_diet = Analyzer.new(ui)
+
+      allow(ui).to receive(:render)
+
+      package_diet.run(directory)
+
+      expect(ui).to have_received(:render) do |graph|
+        matches_node(graph.first, 'LevelOne')
+        matches_node(graph.last, 'LevelTwo')
+      end
+    end
+
     def matches_node(graph, name)
       expect(graph.name).to eq(name)
       expect(graph.dependencies).to be_empty

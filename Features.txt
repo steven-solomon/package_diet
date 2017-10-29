@@ -1,0 +1,9 @@
+Features
+- Recursively parses directory and lists packages
+
+DONE
+- Recursive parsing of directories
+
+TODO
+- Render GraphViz diagram of packages
+- Choose either Package, module, or component to refer to domain term
