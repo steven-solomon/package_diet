@@ -24,6 +24,31 @@ module Rendering
       GRAPH
     end
 
+    it 'converts single node with single dependency into digraph' do
+      node = Parsing::Node.new('A', [Parsing::Node.new('B')])
+      expect(GraphConverter.convert([node])).to eq(<<~GRAPH)
+        digraph G{
+          node [shape=component]
+          A -> { B };
+        }
+      GRAPH
+    end
+
+    it 'converts single node with multiple dependencies into digraph' do
+      dependencies = [
+        Parsing::Node.new('B'),
+        Parsing::Node.new('C'),
+      ]
+
+      node = Parsing::Node.new('A', dependencies)
+      expect(GraphConverter.convert([node])).to eq(<<~GRAPH)
+        digraph G{
+          node [shape=component]
+          A -> { B C };
+        }
+      GRAPH
+    end
+
     it 'converts multiple nodes into digraph' do
       a = Parsing::Node.new('A')
       b = Parsing::Node.new('B')

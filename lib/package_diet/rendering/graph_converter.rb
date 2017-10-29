@@ -9,19 +9,32 @@ module Rendering
     private
 
     def self.format_graph(graph)
-      "digraph G{\n" +
-        "  node [shape=component]\n" +
-        "#{format_nodes(graph)}}\n"
+      <<~GRAPH
+        digraph G{
+          node [shape=component]
+        #{format_nodes(graph)}}
+      GRAPH
     end
 
     def self.format_nodes(graph)
       graph
         .map { |node| format_node(node) }
-        .join("")
+        .join('')
     end
 
     def self.format_node(node)
-      "  #{node.name};\n"
+      if node.dependencies.empty?
+        "  #{node.name};\n"
+      else
+        "  #{node.name} -> { #{format_dependencies(node)} };\n"
+      end
+    end
+
+    def self.format_dependencies(node)
+      node
+        .dependencies
+        .map(&:name)
+        .join(' ')
     end
   end
 end
