@@ -2,9 +2,9 @@ module Parsing
   class Node
     attr_reader :name, :dependencies
 
-    def initialize(name)
+    def initialize(name, dependencies = [])
       @name = name
-      @dependencies = []
+      @dependencies = dependencies
     end
 
     def ==(other)
