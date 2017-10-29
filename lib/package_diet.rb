@@ -9,14 +9,10 @@ require 'package_diet/rendering/graph_converter'
 module PackageDiet
   class Runner
     def self.run(path)
-      analyzer = Parsing::Analyzer.new(Rendering::GraphVizUI.new('./package-structure.png'))
+      analyzer = Parsing::Analyzer.new(
+        Rendering::GraphVizUI.new('./package-structure.png')
+      )
       analyzer.run(path)
     end
-  end
-end
-
-class CommandLineUI
-  def render(nodes)
-    nodes.each { |node| puts node.name }
   end
 end
